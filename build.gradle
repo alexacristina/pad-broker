@@ -1,0 +1,47 @@
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+}
+
+allprojects {
+	apply plugin: "java"
+	apply plugin: "application"
+
+	repositories {
+		mavenCentral()
+	}
+}
+
+subprojects {
+	repositories {
+		mavenCentral()
+	}
+}
+
+subprojects {
+
+}
+
+configure(subprojects.findAll {it.name != 'sender'}) {
+	
+}
+
+ext.producerMessage = null
+
+project(':receiver') {
+    dependencies {
+        compile project(':input_output')
+    }
+}
+
+project(':sender') {
+    dependencies {
+        compile project(':input_output')
+    }
+}
+
+project(':broker') {
+    dependencies {
+        compile project(':input_output')
+    }
+}
