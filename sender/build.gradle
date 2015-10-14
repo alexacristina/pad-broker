@@ -1,4 +1,12 @@
  
-mainClassName = 'lab1.sender.Main'
+mainClassName = "sender.Sender";
+
+
+task(runSimple, type: JavaExec) {
+    main = 'sender.Sender'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+defaultTasks 'runSimple'
 
 

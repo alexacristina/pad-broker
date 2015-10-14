@@ -1,34 +1,30 @@
 package input_output;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.net.InetAddress;
+import java.util.Scanner;
         
-public class IO implements IOInterface {
+public class FileIO implements IOInterface {
     
-    public IO(){
+    public FileIO(){
         
     }
     
-    public BufferedInputStream read() throws Exception {
+    public String read(String location) throws Exception {
         
-        File xmlFile = new File("sendFile.xml");
-        FileInputStream finputstr = new FileInputStream(xmlFile);
-        BufferedInputStream binputstr = new BufferedInputStream(finputstr);
-        return binputstr;
+        String strFile="";
+        strFile = new Scanner(new File(location)).useDelimiter("\\Z").next();
+        return strFile;
+        
     }
     
     public void write(String[] args) throws Exception {
-        File xmlFile = new File("receiveFile.xml");
+        File xmlFile = new File("receiveFile1.xml");
         FileOutputStream foutstr = new FileOutputStream(xmlFile);
         BufferedOutputStream bufoutstr = new BufferedOutputStream(foutstr);
         bufoutstr.write(args[0].getBytes());
         bufoutstr.close();
-        
     }
-    
-
- 
 }

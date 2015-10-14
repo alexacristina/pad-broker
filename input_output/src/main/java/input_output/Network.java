@@ -23,8 +23,8 @@ public class Network implements NetworkInterface{
         
     }
     
-    public String receivePacket (int port, int length) throws Exception {
-        byte[] buffer = new byte[length];
+    public String receivePacket (int port) throws Exception {
+        byte[] buffer = new byte[2048];
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
         DatagramSocket socket = new DatagramSocket(port);
         socket.receive(packet);
@@ -32,10 +32,10 @@ public class Network implements NetworkInterface{
         return new String(buffer);
     }
     
-    public void sendPacket(String args[]) throws Exception {
-        byte[] buffer = args[0].getBytes();
+    public void sendPacket(String message) throws Exception {
+        byte[] buffer = message.getBytes();
         InetAddress dst = InetAddress.getLocalHost();
-        int port = 20050;
+        int port = 5555;
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length, dst, port);
         DatagramSocket socket = new DatagramSocket();
         socket.send(packet);
