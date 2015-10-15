@@ -1,6 +1,6 @@
 package receiver;
 
-import input_output.IOInterface;
+import input_output.FileIOInterface;
 import input_output.FileIO;
 import input_output.Network;
 import input_output.NetworkInterface;
@@ -13,16 +13,17 @@ class Receiver {
             System.out.println("Hello, I am receiver");
         while(true) {
             try {
+                String location = "src/main/resources/receivedXML.xml";
                 InetAddress address= InetAddress.getByName("127.0.0.1");
-                NetworkInterface myinterface = new Network(address, 5555);
-                String receivedpacket = myinterface.receivePacket(5555);
-                System.out.println("Received packet:" + receivedpacket);
-                IOInterface output = new FileIO();
-                output.write(new String[] {myinterface.toString()});
-                System.out.println(myinterface.toString());
+                NetworkInterface networkInterface = new Network(address, 5555);
+                String receivedPacket = networkInterface.receivePacket();
+                System.out.println("Received packet:" + receivedPacket);
+                FileIOInterface outputInterface = new FileIO();
+                outputInterface.write(receivedPacket, location);
+                System.out.println(networkInterface.toString());
             }
             catch (Exception e) {
-
+                System.err.println(e);
             }
         }
     }

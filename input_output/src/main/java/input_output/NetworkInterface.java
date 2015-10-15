@@ -11,8 +11,7 @@ package input_output;
  */
 public interface NetworkInterface {
     
-      
-    public String receivePacket (int port) throws Exception;
+    public String receivePacket () throws Exception;
     public void sendPacket(String message) throws Exception ;
     
 }

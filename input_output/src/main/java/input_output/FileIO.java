@@ -1,12 +1,12 @@
 package input_output;
 
 import java.io.File;
-import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
-import java.net.InetAddress;
+import java.io.FileWriter;
+import java.nio.file.Files;
 import java.util.Scanner;
         
-public class FileIO implements IOInterface {
+public class FileIO implements FileIOInterface {
     
     public FileIO(){
         
@@ -20,11 +20,15 @@ public class FileIO implements IOInterface {
         
     }
     
-    public void write(String[] args) throws Exception {
-        File xmlFile = new File("receiveFile1.xml");
+    public void write(String receivedpacket, String location) throws Exception {
+        File xmlFile = new File(location);
+        if (!xmlFile.exists()) {
+            xmlFile.createNewFile();
+        }
         FileOutputStream foutstr = new FileOutputStream(xmlFile);
-        BufferedOutputStream bufoutstr = new BufferedOutputStream(foutstr);
-        bufoutstr.write(args[0].getBytes());
-        bufoutstr.close();
+        FileWriter fileWriter = new FileWriter(xmlFile);
+        fileWriter.write(receivedpacket);
+        fileWriter.close();
+        System.out.println("Done");
     }
 }

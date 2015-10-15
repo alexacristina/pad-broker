@@ -15,15 +15,17 @@ import java.lang.String;
  * @author alexacris
  */
 public class Network implements NetworkInterface{
-
+    InetAddress ip_address;
+    int port;
     /**
      * @param args the command line arguments
      */
     public Network(InetAddress ip_address, int port) {
-        
+        this.ip_address = ip_address; 
+        this.port = port;
     }
     
-    public String receivePacket (int port) throws Exception {
+    public String receivePacket () throws Exception {
         byte[] buffer = new byte[2048];
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
         DatagramSocket socket = new DatagramSocket(port);
