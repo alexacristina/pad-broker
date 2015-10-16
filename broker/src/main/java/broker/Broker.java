@@ -41,6 +41,20 @@ public class Broker implements Runnable {
             Logger.getLogger(Broker.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void sendMessage() throws IOException {
+        try {
+            InetAddress ip_address = InetAddress.getByName("127.0.0.1");
+            String fileToSend = "src/main/resources/fileToSend.xml";
+            FileIOInterface readFromFile = new FileIO();
+            NetworkInterface sendNetwork = new Network(ip_address, port);
+            String stringRead = readFromFile.read(fileToSend);
+            sendNetwork.sendPacket(stringRead);
+        }
+        catch (Exception ex) {
+            Logger.getLogger(Broker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void run() {
         try {
