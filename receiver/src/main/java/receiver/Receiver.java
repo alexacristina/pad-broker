@@ -1,31 +1,38 @@
 package receiver;
 
-import input_output.FileIOInterface;
+import input_output.IOInterface;
 import input_output.FileIO;
 import input_output.Network;
-import input_output.NetworkInterface;
-
+import java.io.IOException;
+import java.util.concurrent.Executors;
 import java.net.InetAddress;
+import java.util.concurrent.ExecutorService;
 
 class Receiver {
 
-	public static void main(String[] args) { 
-            System.out.println("Hello, I am receiver");
-        while(true) {
-            try {
-                String location = "src/main/resources/receivedXML.xml";
-                InetAddress address= InetAddress.getByName("127.0.0.1");
-                NetworkInterface networkInterface = new Network(address, 5555);
-                String receivedPacket = networkInterface.receivePacket();
-                System.out.println("Received packet:" + receivedPacket);
-                FileIOInterface outputInterface = new FileIO();
-                outputInterface.write(receivedPacket, location);
-                System.out.println(networkInterface.toString());
+    public static void main(String[] args) throws Exception { 
+        ExecutorService executorService = Executors.newCachedThreadPool();
+
+        executorService.execute(new Runnable() {
+            public void run() {
+                try {
+                    String location = "src/main/resources/receivedXML.xml";
+                    InetAddress address= InetAddress.getByName("127.0.0.1");
+                    Network networkInterface = new Network(address, 55556);
+                    String receivedPacket = networkInterface.read();
+                    System.out.println("Received packet:" + receivedPacket);
+                    IOInterface outputInterface = new FileIO(location);
+                    outputInterface.write(receivedPacket);
+                    System.out.println(networkInterface.toString());
+                }
+                catch (IOException e) {
+                    System.err.println(e);
+                } 
+                catch (Exception e) {
+                    System.err.println(e);
+                }
             }
-            catch (Exception e) {
-                System.err.println(e);
-            }
-        }
-    }
-        
+        });
+        executorService.shutdown();
+    }     
 }

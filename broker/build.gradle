@@ -1,2 +1,2 @@
 
-mainClassName = "broker.CoreBroker"
+mainClassName = "broker.Broker"

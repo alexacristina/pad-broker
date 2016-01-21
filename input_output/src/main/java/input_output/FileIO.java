@@ -6,23 +6,22 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.util.Scanner;
         
-public class FileIO implements FileIOInterface {
-    
-    public FileIO(){
-        
+public class FileIO implements IOInterface {
+    String location;
+    public FileIO(String location){
+        this.location = location;
     }
     
-    public String read(String location) throws Exception {
-        
+    public String read() throws Exception {
         String strFile="";
-        strFile = new Scanner(new File(location)).useDelimiter("\\Z").next();
+        strFile = new Scanner(new File(this.location)).useDelimiter("\\Z").next();
         return strFile;
-        
     }
     
-    public void write(String receivedpacket, String location) throws Exception {
-        File xmlFile = new File(location);
+    public void write(String receivedpacket) throws Exception {
+        File xmlFile = new File(this.location);
         if (!xmlFile.exists()) {
+            xmlFile.getParentFile().mkdirs();
             xmlFile.createNewFile();
         }
         FileOutputStream foutstr = new FileOutputStream(xmlFile);
